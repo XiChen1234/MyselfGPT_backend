@@ -19,12 +19,11 @@ public class ChatController {
     private ChatService chatService;
     /**
      * 获取talk列表
-     * @param user 所属用户的id
+     * @param userId 所属用户的id
      * @return talk列表
      */
     @GetMapping("/talk")
-    public CommonResponse<List<Talk>> getTalkList(@RequestBody User user) {
-        String userId = user.getUserId();
+    public CommonResponse<List<Talk>> getTalkList(@RequestParam String userId) {
         return CommonResponse.creatForSuccessData(chatService.getTalkList(userId));
     }
     /**

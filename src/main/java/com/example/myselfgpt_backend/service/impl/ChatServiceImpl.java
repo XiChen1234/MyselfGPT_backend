@@ -55,8 +55,7 @@ public class ChatServiceImpl implements ChatService {
             Talk talk = new Talk();
             talk.setMessageListId(messageListId);
             talk.setUserId(userId);
-            if(messageList.isEmpty()) {
-            } else {
+            if(!messageList.isEmpty()) {
                 talk.setTitle(messageList.get(0).getRequest());
                 Collections.sort(messageList);
                 talk.setMessageList(messageList);
