@@ -1,4 +1,4 @@
-package com.example.myselfgpt_backend.domain;
+package com.example.myselfgpt_backend.domain.VO;
 
 import lombok.Data;
 

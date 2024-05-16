@@ -2,7 +2,6 @@ package com.example.myselfgpt_backend.service;
 
 
 import com.example.myselfgpt_backend.common.CommonResponse;
-import com.example.myselfgpt_backend.domain.User;
 
 /**
  * @Description 用户相关业务层接口

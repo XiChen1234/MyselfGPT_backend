@@ -1,8 +1,8 @@
 package com.example.myselfgpt_backend.controller;
 
 import com.example.myselfgpt_backend.common.CommonResponse;
-import com.example.myselfgpt_backend.domain.Talk;
-import com.example.myselfgpt_backend.domain.User;
+import com.example.myselfgpt_backend.domain.VO.Talk;
+import com.example.myselfgpt_backend.domain.VO.User;
 import com.example.myselfgpt_backend.service.ChatService;
 import org.springframework.web.bind.annotation.*;
 

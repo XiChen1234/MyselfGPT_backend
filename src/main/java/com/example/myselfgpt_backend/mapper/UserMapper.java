@@ -1,7 +1,7 @@
 package com.example.myselfgpt_backend.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.example.myselfgpt_backend.domain.User;
+import com.example.myselfgpt_backend.domain.VO.User;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

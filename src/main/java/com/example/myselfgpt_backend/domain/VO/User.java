@@ -1,4 +1,4 @@
-package com.example.myselfgpt_backend.domain;
+package com.example.myselfgpt_backend.domain.VO;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;

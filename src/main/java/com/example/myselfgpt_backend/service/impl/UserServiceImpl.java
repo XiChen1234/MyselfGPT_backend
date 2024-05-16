@@ -2,7 +2,7 @@ package com.example.myselfgpt_backend.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.myselfgpt_backend.common.CommonResponse;
-import com.example.myselfgpt_backend.domain.User;
+import com.example.myselfgpt_backend.domain.VO.User;
 import com.example.myselfgpt_backend.mapper.UserMapper;
 import com.example.myselfgpt_backend.service.UserService;
 import org.springframework.stereotype.Service;

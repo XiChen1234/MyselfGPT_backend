@@ -1,7 +1,6 @@
 package com.example.myselfgpt_backend.service;
 
-import com.example.myselfgpt_backend.common.CommonResponse;
-import com.example.myselfgpt_backend.domain.Talk;
+import com.example.myselfgpt_backend.domain.VO.Talk;
 
 import java.util.List;
 
