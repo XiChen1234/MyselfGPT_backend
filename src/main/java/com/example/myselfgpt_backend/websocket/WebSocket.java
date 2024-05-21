@@ -1,34 +1,70 @@
 package com.example.myselfgpt_backend.websocket;
 
 
+import com.google.gson.Gson;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
+import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @Description 聊天websocket连接
+ * @Description websocket接口
+ * 访问/api/websocket/{userId}即建立websocket连接，后续在这里进行信息收发工作
+ * 这个是多例的
  */
-
-@ServerEndpoint(value = "/websocket/{userId}")
+@ServerEndpoint(value = "/api/websocket/{userId}")
 @Component
 public class WebSocket {
+    private String userId;
+    private static final Map<String, Session> userMap = new ConcurrentHashMap<>();
+
+
+    /**
+     * 建立连接后触发的方法
+     * @param session session对象，对应用户
+     * @param userId 用户id
+     */
     @OnOpen
-    public void onOpen(@PathParam("userId") String userId) {
-        System.out.printf("【websocket连接】%s用户建立连接%n", userId);
+    public void onOpen(Session session, @PathParam("userId") String userId) {
+        System.out.printf("【websocket连接】用户%s建立连接%n", userId);
+        this.userId = userId;
+        userMap.put(userId, session);
     }
 
+    /**
+     * 客户端向服务端发送消息后触发的方法
+     * @param message 具体消息，消息内部存储用户id
+     */
     @OnMessage
     public void onMessage(String message) {
-        System.out.printf("【websocket消息】用户发送来消息：%s%n", message);
+        System.out.printf("【websocket消息】用户%s发送来消息：%s%n", this.userId, message);
+        // 访问讯飞星火服务器的websocket，收到的消息向用户进行展示
     }
 
+    /**
+     * 断开连接时触发的方法
+     * @param userId 用户id
+     */
     @OnClose
     public void OnClose(@PathParam("userId") String userId) {
-        System.out.printf("【websocket断开】%s用户断开连接%n", userId);
+        System.out.printf("【websocket断开】用户%s断开连接%n", userId);
+        userMap.remove(userId);
     }
 
+    /**
+     * 服务端主动向客户端发送消息
+     * @param userId 客户端用户id
+     * @param message 消息内容
+     */
+    public void sendMessage(String userId, String message) {
+        Session session = userMap.get(userId);
+        session.getAsyncRemote().sendText("收到了消息，现在我要给你发：" + message);
+    }
 }
