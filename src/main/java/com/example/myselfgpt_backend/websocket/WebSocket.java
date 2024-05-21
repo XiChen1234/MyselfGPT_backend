@@ -1,10 +1,11 @@
 package com.example.myselfgpt_backend.websocket;
 
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
+import com.example.myselfgpt_backend.service.MessageService;
+import com.example.myselfgpt_backend.service.impl.MessageServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
@@ -28,6 +29,14 @@ public class WebSocket {
     private String userId;
     private static final Map<String, Session> userMap = new ConcurrentHashMap<>();
 
+    /**
+     * 保存Message
+     * @param userId 用户id
+     * @param totalAnswer gpt给予的最终所有的答复
+     */
+    public static void saveMessage(String userId, String totalAnswer) {
+    }
+
 
     /**
      * 建立连接后触发的方法
@@ -46,19 +55,25 @@ public class WebSocket {
      * 客户端向服务端发送消息后触发的方法
      *
      * @param message 具体消息，消息内部存储用户id
+     *                json字符串，解析如下：
+     *                {
+     *                  index: {number} message的索引,
+     *                  messageList: {string} messageList的id,
+     *                  request: {string} 用户发的问题
+     *                }
      */
     @OnMessage
     public void onMessage(String message) throws Exception {
         System.out.printf("【websocket消息】用户%s发送来消息：%s%n", this.userId, message);
         // 访问讯飞星火服务器的websocket，收到的消息向用户进行展示
         // 构建鉴权url
-        NewQuestion=message;
-        String authUrl = getAuthUrl(hostUrl, apiKey, apiSecret);
-        OkHttpClient client = new OkHttpClient.Builder().build();
-        String url = authUrl.replace("http://", "ws://").replace("https://", "wss://");
-        Request request = new Request.Builder().url(url).build();
-        totalAnswer = "";
-        okhttp3.WebSocket webSocket = client.newWebSocket(request, new BigModelNew(userId, false));
+//        NewQuestion=message;
+//        String authUrl = getAuthUrl(hostUrl, apiKey, apiSecret);
+//        OkHttpClient client = new OkHttpClient.Builder().build();
+//        String url = authUrl.replace("http://", "ws://").replace("https://", "wss://");
+//        Request request = new Request.Builder().url(url).build();
+//        totalAnswer = "";
+//        okhttp3.WebSocket webSocket = client.newWebSocket(request, new BigModelNew(userId, false));
     }
 
     /**

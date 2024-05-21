@@ -10,6 +10,7 @@ public class Message implements Comparable<Message> {
     private int index;
     private String request;
     private String response;
+    private String messageListId;
 
 
     @Override

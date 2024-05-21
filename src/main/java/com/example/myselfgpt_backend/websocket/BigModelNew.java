@@ -210,6 +210,7 @@ public class BigModelNew extends WebSocketListener {
         if (myJsonParse.header.status == 2) {
             stopFlag = true;
             // 可以关闭连接，释放资源
+            com.example.myselfgpt_backend.websocket.WebSocket.saveMessage(this.userId, totalAnswer);
             System.out.println();
             System.out.println("*************************************************************************************");
             if(canAddHistory()){
