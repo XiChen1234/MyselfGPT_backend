@@ -1,7 +1,8 @@
 package com.example.myselfgpt_backend.websocket;
 
 
-import com.google.gson.Gson;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.OnClose;
@@ -13,6 +14,8 @@ import javax.websocket.server.ServerEndpoint;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static com.example.myselfgpt_backend.websocket.BigModelNew.*;
 
 /**
  * @Description websocket接口
@@ -28,8 +31,9 @@ public class WebSocket {
 
     /**
      * 建立连接后触发的方法
+     *
      * @param session session对象，对应用户
-     * @param userId 用户id
+     * @param userId  用户id
      */
     @OnOpen
     public void onOpen(Session session, @PathParam("userId") String userId) {
@@ -40,16 +44,26 @@ public class WebSocket {
 
     /**
      * 客户端向服务端发送消息后触发的方法
+     *
      * @param message 具体消息，消息内部存储用户id
      */
     @OnMessage
-    public void onMessage(String message) {
+    public void onMessage(String message) throws Exception {
         System.out.printf("【websocket消息】用户%s发送来消息：%s%n", this.userId, message);
         // 访问讯飞星火服务器的websocket，收到的消息向用户进行展示
+        // 构建鉴权url
+        NewQuestion=message;
+        String authUrl = getAuthUrl(hostUrl, apiKey, apiSecret);
+        OkHttpClient client = new OkHttpClient.Builder().build();
+        String url = authUrl.replace("http://", "ws://").replace("https://", "wss://");
+        Request request = new Request.Builder().url(url).build();
+        totalAnswer = "";
+        okhttp3.WebSocket webSocket = client.newWebSocket(request, new BigModelNew(userId, false));
     }
 
     /**
      * 断开连接时触发的方法
+     *
      * @param userId 用户id
      */
     @OnClose
@@ -60,11 +74,12 @@ public class WebSocket {
 
     /**
      * 服务端主动向客户端发送消息
-     * @param userId 客户端用户id
+     *
+     * @param userId  客户端用户id
      * @param message 消息内容
      */
-    public void sendMessage(String userId, String message) {
+    public static void sendMessage(String userId, String message) {
         Session session = userMap.get(userId);
-        session.getAsyncRemote().sendText("收到了消息，现在我要给你发：" + message);
+        session.getAsyncRemote().sendText(message);
     }
 }

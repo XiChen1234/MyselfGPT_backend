@@ -205,6 +205,7 @@ public class BigModelNew extends WebSocketListener {
         for (Text temp : textList) {
             System.out.print(temp.content);
             totalAnswer=totalAnswer+temp.content;
+            com.example.myselfgpt_backend.websocket.WebSocket.sendMessage(this.userId, totalAnswer);
         }
         if (myJsonParse.header.status == 2) {
             stopFlag = true;
