@@ -11,6 +11,7 @@ import com.example.myselfgpt_backend.service.MessageService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Objects;
 
 /**
  * @Description message相关业务的具体实现
@@ -36,6 +37,12 @@ public class MessageServiceImpl implements MessageService {
         QueryWrapper<Talk> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(Talk::getTalkIndex, talkIndex);
         Talk talk = talkMapper.selectOne(queryWrapper);
+
+        if(Objects.equals(talk.getTitle(), "新对话")) {
+            talk.setTitle(request);
+            talkMapper.updateById(talk);
+        }
+
         String talkId = talk.getId();
 
         // 保存message
