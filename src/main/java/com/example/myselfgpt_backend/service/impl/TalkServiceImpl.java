@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -54,6 +56,7 @@ public class TalkServiceImpl implements TalkService {
 
                 messageVOS.add(message);
             }
+            Collections.sort(messageVOS);
 
             TalkVO talk = new TalkVO();
             talk.setIndex(talkItem.getTalkIndex());
@@ -62,6 +65,7 @@ public class TalkServiceImpl implements TalkService {
 
             talkVOS.add(talk);
         }
+        Collections.sort(talkVOS);
 
         return CommonResponse.creatForSuccessData(talkVOS);
     }

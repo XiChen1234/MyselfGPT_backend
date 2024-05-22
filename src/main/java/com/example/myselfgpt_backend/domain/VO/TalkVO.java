@@ -1,6 +1,7 @@
 package com.example.myselfgpt_backend.domain.VO;
 
 import lombok.Data;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -9,8 +10,13 @@ import java.util.List;
  * 前端向后端传入的视图层对象（View Object）
  */
 @Data
-public class TalkVO {
+public class TalkVO implements Comparable<TalkVO>{
     private Integer index;
     private String title;
     private List<MessageVO> messageList;
+
+    @Override
+    public int compareTo(@NotNull TalkVO talk) {
+        return Integer.compare(this.index, talk.index);
+    }
 }

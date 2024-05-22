@@ -1,44 +1,60 @@
 package com.example.myselfgpt_backend.controller;
 
 import com.example.myselfgpt_backend.common.CommonResponse;
-import com.example.myselfgpt_backend.domain.VO.Talk;
-import com.example.myselfgpt_backend.domain.VO.User;
-import com.example.myselfgpt_backend.service.ChatService;
+import com.example.myselfgpt_backend.domain.VO.MessageVO;
+import com.example.myselfgpt_backend.domain.VO.TalkVO;
+import com.example.myselfgpt_backend.service.MessageService;
+import com.example.myselfgpt_backend.service.TalkService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * @Description 聊天相关接口
+ * @Description 在聊天界面使用到的非websocket的相关的API接口
  */
 @RestController
-@RequestMapping("/api/chat")
+@RequestMapping("api/talk")
 public class ChatController {
     @Resource
-    private ChatService chatService;
+    private TalkService talkService;
+    @Resource
+    private MessageService messageService;
+
     /**
      * 获取talk列表
+     *
      * @param userId 所属用户的id
      * @return talk列表
      */
-    @GetMapping("/talk")
-    public CommonResponse<List<Talk>> getTalkList(@RequestParam String userId) {
-        return CommonResponse.creatForSuccessData(chatService.getTalkList(userId));
+    @GetMapping
+    public CommonResponse<List<TalkVO>> getTalkList(@RequestParam String userId) {
+        return talkService.getTalkList(userId);
     }
+
     /**
      * 创建新的talk
+     *
      * @param user 所属用户的id
      * @return 是否创建成功
      */
     @PostMapping("/talk")
-    public CommonResponse<Boolean> creatTalk(@RequestBody User user) {
-        String userId = user.getUserId();
-        int res = chatService.createNewTalk(userId);
-        if(res != 0) {
-            return CommonResponse.creatForSuccessData(true);
-        }
-
-        return CommonResponse.creatForErrorMessage("创建失败");
+    public CommonResponse<Boolean> creatTalk() {
+        return null;
     }
+
+    /**
+     * 发送信息并将其保存到数据库中
+     *
+     * @param message 发送的信息对象
+     * @return 响应结果
+     */
+    @PostMapping("/message")
+    public CommonResponse<Boolean> creatMessage(@RequestBody MessageVO message) {
+        Integer messageIndex = message.getIndex();
+        String question = message.getQuestion();
+        Integer talkIndex = message.getTalkIndex();
+        return messageService.saveMessage(talkIndex, question, messageIndex);
+    }
+
 }
