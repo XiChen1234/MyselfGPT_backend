@@ -5,7 +5,7 @@ import com.example.myselfgpt_backend.domain.DTO.MessageDTO;
 import com.example.myselfgpt_backend.domain.DTO.MessageListDTO;
 import com.example.myselfgpt_backend.domain.VO.Message;
 import com.example.myselfgpt_backend.domain.VO.Talk;
-import com.example.myselfgpt_backend.mapper.MessageListMapper;
+import com.example.myselfgpt_backend.mapper.TalkMapper;
 import com.example.myselfgpt_backend.mapper.MessageMapper;
 import com.example.myselfgpt_backend.service.ChatService;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class ChatServiceImpl implements ChatService {
     @Resource
     private MessageMapper messageMapper;
     @Resource
-    private MessageListMapper messageListMapper;
+    private TalkMapper talkMapper;
 
     /**
      * 获取talk列表
@@ -34,7 +34,7 @@ public class ChatServiceImpl implements ChatService {
     public List<Talk> getTalkList(String userId) {
         QueryWrapper<MessageListDTO> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(MessageListDTO::getUserId, userId);
-        List<MessageListDTO> list = messageListMapper.selectList(queryWrapper);
+        List<MessageListDTO> list = talkMapper.selectList(queryWrapper);
 
         List<Talk> talkList = new ArrayList<>();
         for (MessageListDTO messageListDTO : list) {
@@ -75,6 +75,6 @@ public class ChatServiceImpl implements ChatService {
     public Integer createNewTalk(String userId) {
         MessageListDTO messageList = new MessageListDTO();
         messageList.setUserId(userId);
-        return messageListMapper.insert(messageList);
+        return talkMapper.insert(messageList);
     }
 }
