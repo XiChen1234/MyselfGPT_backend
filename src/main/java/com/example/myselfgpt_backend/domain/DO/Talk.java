@@ -17,5 +17,5 @@ public class Talk {
     private String userId;
     private String title;
     @TableField("talk_index")
-    private String index;
+    private Integer talkIndex;
 }

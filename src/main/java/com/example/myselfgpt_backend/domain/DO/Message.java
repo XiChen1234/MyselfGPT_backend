@@ -18,5 +18,5 @@ public class Message {
     private String request;
     private String response;
     @TableField("message_index")
-    private Integer index;
+    private Integer messageIndex;
 }
