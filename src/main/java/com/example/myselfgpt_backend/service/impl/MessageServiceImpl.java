@@ -26,11 +26,12 @@ public class MessageServiceImpl implements MessageService {
     public Boolean saveMessage(String messageListId,
                                String request,
                                int messageIndex) {
-        MessageDTO message = new MessageDTO();
-        message.setMessageListId(messageListId);
-        message.setRequest(request);
-        message.setMessageIndex(messageIndex);
-        message.setResponse("");
-        return messageMapper.insert(message) == 1;
+//        MessageDTO message = new MessageDTO();
+//        message.setMessageListId(messageListId);
+//        message.setRequest(request);
+//        message.setMessageIndex(messageIndex);
+//        message.setResponse("");
+//        return messageMapper.insert(message) == 1;
+        return null;
     }
 }

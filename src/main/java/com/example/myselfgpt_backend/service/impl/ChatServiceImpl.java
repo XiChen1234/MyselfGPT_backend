@@ -32,37 +32,37 @@ public class ChatServiceImpl implements ChatService {
      */
     @Override
     public List<Talk> getTalkList(String userId) {
-        QueryWrapper<MessageListDTO> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(MessageListDTO::getUserId, userId);
-        List<MessageListDTO> list = talkMapper.selectList(queryWrapper);
-
-        List<Talk> talkList = new ArrayList<>();
-        for (MessageListDTO messageListDTO : list) {
-            String messageListId = messageListDTO.getId();
-            QueryWrapper<MessageDTO> queryWrapper1 = new QueryWrapper<>();
-            queryWrapper1.lambda().eq(MessageDTO::getMessageListId, messageListId);
-            List<MessageDTO> list1 = messageMapper.selectList(queryWrapper1);
-
-            List<Message> messageList = new ArrayList<>();
-            for (MessageDTO messageDTO : list1) {
-                Message message = new Message();
-                message.setIndex(messageDTO.getMessageIndex());
-                message.setRequest(messageDTO.getRequest());
-                message.setResponse(messageDTO.getResponse());
-
-                messageList.add(message);
-            }
-            Talk talk = new Talk();
-            talk.setMessageListId(messageListId);
-            talk.setUserId(userId);
-            if(!messageList.isEmpty()) {
-                talk.setTitle(messageList.get(0).getRequest());
-                Collections.sort(messageList);
-                talk.setMessageList(messageList);
-            }
-            talkList.add(talk);
-        }
-        return talkList;
+//        QueryWrapper<MessageListDTO> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.lambda().eq(MessageListDTO::getUserId, userId);
+//        List<MessageListDTO> list = talkMapper.selectList(queryWrapper);
+//
+//        List<Talk> talkList = new ArrayList<>();
+//        for (MessageListDTO messageListDTO : list) {
+//            String messageListId = messageListDTO.getId();
+//            QueryWrapper<MessageDTO> queryWrapper1 = new QueryWrapper<>();
+//            queryWrapper1.lambda().eq(MessageDTO::getMessageListId, messageListId);
+//            List<MessageDTO> list1 = messageMapper.selectList(queryWrapper1);
+//
+//            List<Message> messageList = new ArrayList<>();
+//            for (MessageDTO messageDTO : list1) {
+//                Message message = new Message();
+//                message.setIndex(messageDTO.getMessageIndex());
+//                message.setRequest(messageDTO.getRequest());
+//                message.setResponse(messageDTO.getResponse());
+//
+//                messageList.add(message);
+//            }
+//            Talk talk = new Talk();
+//            talk.setMessageListId(messageListId);
+//            talk.setUserId(userId);
+//            if(!messageList.isEmpty()) {
+//                talk.setTitle(messageList.get(0).getRequest());
+//                Collections.sort(messageList);
+//                talk.setMessageList(messageList);
+//            }
+//            talkList.add(talk);
+//        }
+        return null;
     }
 
 
@@ -73,8 +73,9 @@ public class ChatServiceImpl implements ChatService {
      */
     @Override
     public Integer createNewTalk(String userId) {
-        MessageListDTO messageList = new MessageListDTO();
-        messageList.setUserId(userId);
-        return talkMapper.insert(messageList);
+//        MessageListDTO messageList = new MessageListDTO();
+//        messageList.setUserId(userId);
+//        return talkMapper.insert(messageList);
+        return null;
     }
 }

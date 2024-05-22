@@ -1,7 +1,7 @@
 package com.example.myselfgpt_backend.controller;
 
 import com.example.myselfgpt_backend.common.CommonResponse;
-import com.example.myselfgpt_backend.domain.DTO.LoginDTO;
+import com.example.myselfgpt_backend.domain.VO.LoginVO;
 import com.example.myselfgpt_backend.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,12 +15,12 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/api")
-public class AccountController {
+public class UserController {
     @Resource
     private UserService userService;
 
     @PostMapping("/login")
-    public CommonResponse<Boolean> login(@RequestBody LoginDTO user) {
+    public CommonResponse<Boolean> login(@RequestBody LoginVO user) {
         String username = user.getUsername();
         String password = user.getPassword();
         // todo: 参数校验，暂时省略

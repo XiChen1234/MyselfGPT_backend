@@ -2,7 +2,7 @@ package com.example.myselfgpt_backend.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.myselfgpt_backend.common.CommonResponse;
-import com.example.myselfgpt_backend.domain.VO.User;
+import com.example.myselfgpt_backend.domain.DO.User;
 import com.example.myselfgpt_backend.mapper.UserMapper;
 import com.example.myselfgpt_backend.service.UserService;
 import org.springframework.stereotype.Service;
@@ -16,12 +16,22 @@ import javax.annotation.Resource;
 public class UserServiceImpl implements UserService {
     @Resource
     private UserMapper userMapper;
+
+    /**
+     * 登录
+     *
+     * @param username 用户名
+     * @param password 密码
+     * @return 是否登录成功
+     */
     @Override
     public CommonResponse<Boolean> login(String username, String password) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(User::getUsername, username).eq(User::getPassword, password);
+        queryWrapper.lambda()
+                .eq(User::getUsername, username)
+                .eq(User::getPassword, password);
         User user = userMapper.selectOne(queryWrapper);
-        if(user == null) {
+        if (user == null) {
             return CommonResponse.creatForWarningMessage("用户名或密码错误");
         }
         // 登录成功
