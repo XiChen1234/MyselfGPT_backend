@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,8 +25,10 @@ public class TalkServiceImpl implements TalkService {
     private TalkMapper talkMapper;
     @Resource
     private MessageMapper messageMapper;
+
     /**
      * 获取talk列表
+     *
      * @param userId 用户id
      * @return 响应结果
      */
@@ -39,7 +40,7 @@ public class TalkServiceImpl implements TalkService {
         List<Talk> talkList = talkMapper.selectList(talkQueryWrapper);
 
         List<TalkVO> talkVOS = new ArrayList<>(); // 存储结果
-        for(Talk talkItem: talkList) {
+        for (Talk talkItem : talkList) {
             String talkId = talkItem.getId();
 
             // 匹配talkId下的message
@@ -48,7 +49,7 @@ public class TalkServiceImpl implements TalkService {
             List<Message> messageList = messageMapper.selectList(messageQueryWrapper);
 
             List<MessageVO> messageVOS = new ArrayList<>(); // 存储结果
-            for(Message messageItem : messageList) {
+            for (Message messageItem : messageList) {
                 MessageVO message = new MessageVO();
                 message.setIndex(messageItem.getMessageIndex());
                 message.setQuestion(messageItem.getRequest());
@@ -68,5 +69,27 @@ public class TalkServiceImpl implements TalkService {
         Collections.sort(talkVOS);
 
         return CommonResponse.creatForSuccessData(talkVOS);
+    }
+
+    /**
+     * 新建一个talk
+     *
+     * @param userId 所属用户的id
+     * @return 是否新建成功
+     */
+    @Override
+    public CommonResponse<Boolean> creatTalk(String userId) {
+        Talk talk = new Talk();
+        talk.setTitle("新对话");
+        talk.setUserId(userId);
+
+        List<Talk> talkList = talkMapper.selectList(null);
+        talk.setTalkIndex(talkList.size());
+
+        int i = talkMapper.insert(talk);
+        if(i != 1) {
+            return CommonResponse.creatForError();
+        }
+        return CommonResponse.creatForSuccessData(true);
     }
 }

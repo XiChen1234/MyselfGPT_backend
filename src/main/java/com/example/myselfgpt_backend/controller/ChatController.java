@@ -1,6 +1,7 @@
 package com.example.myselfgpt_backend.controller;
 
 import com.example.myselfgpt_backend.common.CommonResponse;
+import com.example.myselfgpt_backend.domain.DO.User;
 import com.example.myselfgpt_backend.domain.VO.MessageVO;
 import com.example.myselfgpt_backend.domain.VO.TalkVO;
 import com.example.myselfgpt_backend.service.MessageService;
@@ -38,9 +39,10 @@ public class ChatController {
      * @param user 所属用户的id
      * @return 是否创建成功
      */
-    @PostMapping("/talk")
-    public CommonResponse<Boolean> creatTalk() {
-        return null;
+    @PostMapping
+    public CommonResponse<Boolean> creatTalk(@RequestBody User user) {
+        String userId = user.getId();
+        return talkService.creatTalk(userId);
     }
 
     /**

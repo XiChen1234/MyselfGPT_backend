@@ -11,8 +11,17 @@ import java.util.List;
 public interface TalkService {
     /**
      * 获取talk列表
+     *
      * @param userId 用户id
-     * @return 响应结果
+     * @return talk列表
      */
     public CommonResponse<List<TalkVO>> getTalkList(String userId);
+
+    /**
+     * 新建一个talk
+     *
+     * @param userId 所属用户的id
+     * @return 是否新建成功
+     */
+    public CommonResponse<Boolean> creatTalk(String userId);
 }
