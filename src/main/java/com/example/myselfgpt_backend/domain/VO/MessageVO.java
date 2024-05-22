@@ -13,6 +13,7 @@ public class MessageVO implements Comparable<MessageVO> {
     private String answer;
     private String question;
     private Integer talkIndex;
+    private String userId;
 
     @Override
     public int compareTo(@NotNull MessageVO message) {

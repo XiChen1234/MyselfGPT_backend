@@ -11,6 +11,7 @@ import com.example.myselfgpt_backend.service.MessageService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -55,6 +56,33 @@ public class MessageServiceImpl implements MessageService {
         if(i != 1) {
             return CommonResponse.creatForError();
         }
+        return CommonResponse.creatForSuccessData(true);
+    }
+
+    /**
+     * 更新大模型回答之后的问题
+     * @param userId 用户id
+     * @param talkIndex 会话index
+     * @param response 大模型给出的回复
+     * @return 响应结果
+     */
+    @Override
+    public CommonResponse<Boolean> updateMessage(String userId, Integer talkIndex, String response) {
+        QueryWrapper<Talk> talkQueryWrapper =new QueryWrapper<>();
+        talkQueryWrapper.lambda().eq(Talk::getUserId, userId).eq(Talk::getTalkIndex, talkIndex);
+        Talk talk = talkMapper.selectOne(talkQueryWrapper);
+        String talkId = talk.getId();
+
+        QueryWrapper<Message> messageQueryWrapper = new QueryWrapper<>();
+        messageQueryWrapper.lambda().eq(Message::getTalkId, talkId).eq(Message::getResponse, "");
+        Message message = messageMapper.selectOne(messageQueryWrapper);
+        message.setResponse(response);
+        int i = messageMapper.updateById(message);
+        System.out.println(i);
+        if(i != 1) {
+            return CommonResponse.creatForError();
+        }
+
         return CommonResponse.creatForSuccessData(true);
     }
 }

@@ -59,4 +59,12 @@ public class ChatController {
         return messageService.saveMessage(talkIndex, question, messageIndex);
     }
 
+    @PutMapping("/message")
+    public CommonResponse<Boolean> saveResponse(@RequestBody MessageVO message) {
+        String userId = message.getUserId();
+        Integer talkIndex = message.getTalkIndex();
+        String response = message.getAnswer();
+
+        return messageService.updateMessage(userId, talkIndex, response);
+    }
 }

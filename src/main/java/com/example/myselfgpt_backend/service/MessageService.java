@@ -17,4 +17,13 @@ public interface MessageService {
     public CommonResponse<Boolean> saveMessage(Integer talkIndex,
                                                String request,
                                                Integer messageIndex);
+
+    /**
+     * 更新大模型回答之后的问题
+     * @param userId 用户id
+     * @param talkIndex 会话index
+     * @param response 大模型给出的回复
+     * @return 响应结果
+     */
+    public CommonResponse<Boolean> updateMessage(String userId, Integer talkIndex, String response);
 }

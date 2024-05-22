@@ -3,10 +3,15 @@ package com.example.myselfgpt_backend.websocket;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.example.myselfgpt_backend.domain.DO.Message;
+import com.example.myselfgpt_backend.mapper.MessageMapper;
+import com.example.myselfgpt_backend.service.MessageService;
+import com.example.myselfgpt_backend.service.impl.MessageServiceImpl;
 import com.google.gson.Gson;
 import okhttp3.WebSocket;
 import okhttp3.*;
 
+import javax.annotation.Resource;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
@@ -205,12 +210,15 @@ public class BigModelNew extends WebSocketListener {
         for (Text temp : textList) {
             System.out.print(temp.content);
             totalAnswer=totalAnswer+temp.content;
-            com.example.myselfgpt_backend.websocket.WebSocket.sendMessage(this.userId, totalAnswer);
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("flag", myJsonParse.header.status == 2);
+            jsonObject.put("text", totalAnswer);
+            com.example.myselfgpt_backend.websocket.WebSocket.sendMessage(this.userId, jsonObject.toString());
         }
         if (myJsonParse.header.status == 2) {
             stopFlag = true;
             // 可以关闭连接，释放资源
-            com.example.myselfgpt_backend.websocket.WebSocket.saveMessage(this.userId, totalAnswer);
             System.out.println();
             System.out.println("*************************************************************************************");
             if(canAddHistory()){
