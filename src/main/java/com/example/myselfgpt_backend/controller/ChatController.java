@@ -59,6 +59,12 @@ public class ChatController {
         return messageService.saveMessage(talkIndex, question, messageIndex);
     }
 
+    /**
+     * 保存用户收到的答案
+     *
+     * @param message 发送的信息对象
+     * @return 响应结果
+     */
     @PutMapping("/message")
     public CommonResponse<Boolean> saveResponse(@RequestBody MessageVO message) {
         String userId = message.getUserId();

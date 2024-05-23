@@ -4,14 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.myselfgpt_backend.common.CommonResponse;
 import com.example.myselfgpt_backend.domain.DO.Message;
 import com.example.myselfgpt_backend.domain.DO.Talk;
-import com.example.myselfgpt_backend.domain.DTO.MessageDTO;
 import com.example.myselfgpt_backend.mapper.MessageMapper;
 import com.example.myselfgpt_backend.mapper.TalkMapper;
 import com.example.myselfgpt_backend.service.MessageService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 import java.util.Objects;
 
 /**

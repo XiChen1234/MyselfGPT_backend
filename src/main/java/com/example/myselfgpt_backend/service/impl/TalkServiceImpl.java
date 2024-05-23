@@ -87,7 +87,7 @@ public class TalkServiceImpl implements TalkService {
         talk.setTalkIndex(talkList.size());
 
         int i = talkMapper.insert(talk);
-        if(i != 1) {
+        if (i != 1) {
             return CommonResponse.creatForError();
         }
         return CommonResponse.creatForSuccessData(true);
